@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import style from './Element.module.css';
 
-export const Element = ({ sign, group, color, isClick, singleClick, doubleClick }) => {
+export const Element = ({ sign, group, color, isClick, singleClick, doubleClick, left, right  }) => {
 
-  const styleSingleClick = isClick ? "scale(1.2)" : "scale(1)"
+  const styleSingleClick = `${style.element} ${isClick ? style.active : ""}`
 
   const handleClick = useCallback(() => {
     singleClick(group);
@@ -14,10 +14,10 @@ export const Element = ({ sign, group, color, isClick, singleClick, doubleClick 
   }, [group])
 
   return (
-    <div className={style.element}
-      style={{ background: color, transform: styleSingleClick }}
+    <div className={styleSingleClick}
+      style={{ background: color}}
       onClick={handleClick}
       onDoubleClick={handleDoubleClick}
-    >{sign}</div>
+    >{`${left ? "[" : ""} ${sign} ${right ? "]" : ""}`}</div>
   )
 }
