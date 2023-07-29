@@ -1,0 +1,6 @@
+.element {
+  border: 1px dashed black;
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
+}
