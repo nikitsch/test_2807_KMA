@@ -52,7 +52,7 @@ function App() {
           className={style.input}
           placeholder='Entry field'
           value={text}
-          maxlength="100"
+          maxLength="100"
           onChange={handleSubmit}
         />
         <ButtonAdd objArr={objArr} text={text} setText={setText} setValue={setValue} sliceBrackets={sliceBrackets} />
