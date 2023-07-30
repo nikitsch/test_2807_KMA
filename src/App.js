@@ -5,6 +5,7 @@ import { ButtonSort } from './components/Button/ButtonSort';
 import style from './App.module.css';
 import { ButtonClearField } from './components/Button/ButtonClearField';
 import { ButtonClearBlocks } from './components/Button/ButtonClearBlocks';
+import { InputText } from './components/Input/InputText';
 
 const arr = new Array(100).fill({ "value": "_", "leftBracket": false, "rightBracket": false, "block": null, "colorBlock": "#D0D0D0", "isClick": false })
 
@@ -22,10 +23,6 @@ function App() {
       }
     }))
   }, []);
-
-  const handleSubmit = (e) => {
-    setText(e.target.value)
-  }
 
   const singleClick = (group) => {
     setValue((symbols) => symbols.map(({ isClick, ...props }) => ({
@@ -45,17 +42,11 @@ function App() {
       isClick: false
     }) : el))
   }
-  console.log(objArr);
+
   return (
     <>
       <div className={style.inputСontrol}>
-        <input
-          className={style.input}
-          placeholder='Entry field'
-          value={text}
-          maxLength="100"
-          onChange={handleSubmit}
-        />
+        <InputText text={text} setText={setText} />
         <ButtonAdd objArr={objArr} text={text} setText={setText} setValue={setValue} sliceBrackets={sliceBrackets} />
         <ButtonClearField setText={setText} />
       </div>
