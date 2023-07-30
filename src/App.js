@@ -4,6 +4,7 @@ import { ButtonAdd } from './components/Button/ButtonAdd';
 import { ButtonSort } from './components/Button/ButtonSort';
 import style from './App.module.css';
 import { ButtonClearField } from './components/Button/ButtonClearField';
+import { ButtonClearBlocks } from './components/Button/ButtonClearBlocks';
 
 const arr = new Array(100).fill({ "value": "_", "leftBracket": false, "rightBracket": false, "block": null, "colorBlock": "#D0D0D0", "isClick": false })
 
@@ -44,10 +45,10 @@ function App() {
       isClick: false
     }) : el))
   }
-
+  console.log(objArr);
   return (
     <>
-      <div className={style.manual}>
+      <div className={style.inputСontrol}>
         <input
           className={style.input}
           placeholder='Entry field'
@@ -57,7 +58,6 @@ function App() {
         />
         <ButtonAdd objArr={objArr} text={text} setText={setText} setValue={setValue} sliceBrackets={sliceBrackets} />
         <ButtonClearField setText={setText} />
-        <ButtonSort objArr={objArr} setValue={setValue} sliceBrackets={sliceBrackets} />
       </div>
       <div className={style.elements}>
         {objArr.map((el) => {
@@ -72,6 +72,10 @@ function App() {
             doubleClick={doubleClick}
           />
         })}
+      </div>
+      <div className={style.tableСontrol}>
+        <ButtonClearBlocks objArr={objArr} setValue={setValue} />
+        <ButtonSort objArr={objArr} setValue={setValue} sliceBrackets={sliceBrackets} />
       </div>
     </>
   )
