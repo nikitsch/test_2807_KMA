@@ -3,11 +3,13 @@ import { Element } from './Element';
 import style from './App.module.css';
 import { v1 } from 'uuid';
 
-const arr = new Array(100).fill({ "value": "_", "leftBracket": false, "rightBracket": false, "block": "empty", "colorBlock": "#D0D0D0", "isClick": false })
+const arr = new Array(100).fill({ "value": "_", "leftBracket": false, "rightBracket": false, "block": null, "colorBlock": "#D0D0D0", "isClick": false })
 
 function App() {
   const [objArr, setValue] = useState(arr);
   const [text, setText] = useState('');
+
+  // const [originalValues, setOriginalValues] = useState({})
 
   const sliceBrackets = useCallback(() => {
     setValue(arr => arr.map((el, index, array) => {
@@ -31,6 +33,8 @@ function App() {
 
     const color = '#F' + (Math.random().toString(16) + '00000').substring(3, 8).toUpperCase()
     const idBlock = v1()
+
+    // setOriginalValues(values => ({ ...values, [idBlock]: { enter, color } }))
 
     enter.split('').forEach(symbol => {
       let pasted = false;
@@ -80,6 +84,49 @@ function App() {
     setText(e.target.value)
   }
 
+  // console.log(originalValues);
+  const handleSort = () => {
+    // const order = objArr.reduce((arr, el) => arr.includes(el.block) && el.block !== null ? arr : arr.concat(el.block), [])
+
+    // order.forEach(block => {
+    //   originalValues[block].enter
+    //     .split('').forEach(symbol => {
+    //       let pasted = false;
+
+    //       setValue(arr => arr.map(el => {
+    //         if (!pasted) {
+    //           pasted = true;
+    //           return {
+    //             ...el,
+    //             value: symbol,
+    //             leftBracket: true,
+    //             rightBracket: true,
+    //             block,
+    //             colorBlock: originalValues[block].color,
+    //           }
+    //         }
+    //         return el; 
+    //       }))
+    //     })
+    // }
+
+
+    // )
+    // sliceBrackets()
+    const arrBlock = objArr.map(id => id.block)
+    const sortBlock = arrBlock.filter((item, index) =>
+      item !== null && index === arrBlock.indexOf(item)
+    )
+    sortBlock.push(null)
+    console.log(sortBlock);
+    setValue(arr => arr.toSorted((prev, next) => {
+      if (sortBlock.indexOf(prev.block) < sortBlock.indexOf(next.block)) return -1;
+      if (sortBlock.indexOf(prev.block) > sortBlock.indexOf(next.block)) return 1;
+      return 0
+    }))
+    sliceBrackets()
+  }
+
   const singleClick = (group) => {
     setValue((symbols) => symbols.map(({ isClick, ...props }) => ({
       ...props,
@@ -88,16 +135,29 @@ function App() {
   }
 
   const doubleClick = (group) => {
+    // setOriginalValues(values => {
+    //   const copy = {...values};
+    //   delete copy[group];
+
+    //   return copy
+    // })
+
     setValue((symbols) => symbols.map((el) => group === el.block ? ({
       ...el,
       value: '_',
       leftBracket: false,
       rightBracket: false,
-      block: 'empty',
+      block: null,
       colorBlock: "#D0D0D0",
       isClick: false
     }) : el))
   }
+
+  // function deleteDuplicate (array) {
+  //   return array.filter((item, index) => 
+  //     index === array.indexOf(item)
+  //   )
+  // }
 
   return (
     <>
@@ -110,6 +170,9 @@ function App() {
         <button
           onClick={handleAction}
         >ADD</button>
+        <button
+          onClick={handleSort}
+        >SORT</button>
       </div>
       <div className={style.app}>
         {objArr.map((el) => {

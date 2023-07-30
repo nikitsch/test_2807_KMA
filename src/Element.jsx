@@ -7,11 +7,11 @@ export const Element = ({ sign, group, color, isClick, singleClick, doubleClick,
 
   const handleClick = useCallback(() => {
     singleClick(group);
-  }, [group])
+  }, [group, singleClick])
 
   const handleDoubleClick = useCallback(() => {
     doubleClick(group);
-  }, [group])
+  }, [group, doubleClick])
 
   return (
     <div className={styleSingleClick}
