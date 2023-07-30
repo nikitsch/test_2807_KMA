@@ -2,11 +2,11 @@ import style from './Button.module.css';
 
 export const ButtonClearField = ({ setText }) => {
 
-  const handleAction = () => {
+  const handleClearField = () => {
     setText('');
   }
 
   return (
-    <button className={style.button} onClick={handleAction}>clear</button>
+    <button className={style.button} onClick={handleClearField}>clear</button>
   )
 }

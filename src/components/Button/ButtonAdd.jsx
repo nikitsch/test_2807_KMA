@@ -1,16 +1,27 @@
 import { v1 } from 'uuid';
 import style from './Button.module.css';
 
-export const ButtonAdd = ({ objArr, text, setText, setValue, sliceBrackets }) => {
+export const ButtonAdd = ({ newArray, text, setText, setNewArray, sliceBrackets }) => {
 
   function addBlock(enter) {
 
-    const color = '#F' + (Math.random().toString(16) + '00000').substring(3, 8).toUpperCase()
+    const randomColor = '#F' + (Math.random().toString(16) + '00000').substring(3, 8).toUpperCase()
     const idBlock = v1()
     const splitedEnter = enter.split('')
 
+    const addedObject = (el, symbol) => {
+      return {
+        ...el,
+        value: symbol,
+        leftBracket: true,
+        rightBracket: true,
+        block: idBlock,
+        colorBlock: randomColor,
+      }
+    }
+
     let isEmptyInterval = false
-    const baldSpot = objArr.reduce((arr, el, index) => {
+    const baldSpot = newArray.reduce((arr, el, index) => {
       if (el.block !== null) {
         isEmptyInterval = false;
         return arr
@@ -35,16 +46,9 @@ export const ButtonAdd = ({ objArr, text, setText, setValue, sliceBrackets }) =>
     if (equalSpace) {
       splitedEnter.forEach(symbol => {
 
-        setValue(arr => arr.map((el, index) => {
+        setNewArray(arr => arr.map((el, index) => {
           if (index >= equalSpace.start && index <= equalSpace.end) {
-            return {
-              ...el,
-              value: symbol,
-              leftBracket: true,
-              rightBracket: true,
-              block: idBlock,
-              colorBlock: color,
-            }
+            return addedObject(el, symbol)
           }
           return el;
         }))
@@ -54,17 +58,10 @@ export const ButtonAdd = ({ objArr, text, setText, setValue, sliceBrackets }) =>
     else if (biggerSpace) {
       splitedEnter.forEach(symbol => {
         let pasted = false;
-        setValue(arr => arr.map((el, index) => {
+        setNewArray(arr => arr.map((el, index) => {
           if (index >= biggerSpace.start && index <= biggerSpace.end && el.value === '_' && !pasted) {
             pasted = true;
-            return {
-              ...el,
-              value: symbol,
-              leftBracket: true,
-              rightBracket: true,
-              block: idBlock,
-              colorBlock: color,
-            }
+            return addedObject(el, symbol)
           }
           return el;
         }))
@@ -74,18 +71,10 @@ export const ButtonAdd = ({ objArr, text, setText, setValue, sliceBrackets }) =>
     else {
       splitedEnter.forEach(symbol => {
         let pasted = false;
-
-        setValue(arr => arr.map(el => {
+        setNewArray(arr => arr.map(el => {
           if (el.value === '_' && !pasted) {
             pasted = true;
-            return {
-              ...el,
-              value: symbol,
-              leftBracket: true,
-              rightBracket: true,
-              block: idBlock,
-              colorBlock: color,
-            }
+            return addedObject(el, symbol)
           }
           return el;
         }))
@@ -95,8 +84,8 @@ export const ButtonAdd = ({ objArr, text, setText, setValue, sliceBrackets }) =>
     sliceBrackets()
   }
 
-  const handleAction = () => {
-    const emptyFields = objArr.filter(el => el.value === "_").length
+  const handleAdd = () => {
+    const emptyFields = newArray.filter(el => el.value === "_").length
     if (text.trim().length > emptyFields) {
       alert('Нет места. Удалите какой-либо блок')
       return
@@ -108,6 +97,6 @@ export const ButtonAdd = ({ objArr, text, setText, setValue, sliceBrackets }) =>
   }
 
   return (
-    <button className={style.button} onClick={handleAction}>add</button>
+    <button className={style.button} onClick={handleAdd}>add</button>
   )
 }

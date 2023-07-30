@@ -10,11 +10,11 @@ import { InputText } from './components/Input/InputText';
 const arr = new Array(100).fill({ "value": "_", "leftBracket": false, "rightBracket": false, "block": null, "colorBlock": "#D0D0D0", "isClick": false })
 
 function App() {
-  const [objArr, setValue] = useState(arr);
+  const [newArray, setNewArray] = useState(arr);
   const [text, setText] = useState('');
 
   const sliceBrackets = useCallback(() => {
-    setValue(arr => arr.map((el, index, array) => {
+    setNewArray(arr => arr.map((el, index, array) => {
       if (el.value === "_") return el
       return {
         ...el,
@@ -25,14 +25,14 @@ function App() {
   }, []);
 
   const singleClick = (group) => {
-    setValue((symbols) => symbols.map(({ isClick, ...props }) => ({
+    setNewArray((symbols) => symbols.map(({ isClick, ...props }) => ({
       ...props,
       isClick: group === props.block && props.value !== '_' ? !isClick : false,
     })))
   }
 
   const doubleClick = (group) => {
-    setValue((symbols) => symbols.map((el) => group === el.block ? ({
+    setNewArray((symbols) => symbols.map((el) => group === el.block ? ({
       ...el,
       value: '_',
       leftBracket: false,
@@ -47,11 +47,11 @@ function App() {
     <>
       <div className={style.inputСontrol}>
         <InputText text={text} setText={setText} />
-        <ButtonAdd objArr={objArr} text={text} setText={setText} setValue={setValue} sliceBrackets={sliceBrackets} />
+        <ButtonAdd newArray={newArray} text={text} setText={setText} setNewArray={setNewArray} sliceBrackets={sliceBrackets} />
         <ButtonClearField setText={setText} />
       </div>
       <div className={style.elements}>
-        {objArr.map((el) => {
+        {newArray.map((el) => {
           return <Element
             sign={el.value}
             left={el.leftBracket}
@@ -65,8 +65,8 @@ function App() {
         })}
       </div>
       <div className={style.tableСontrol}>
-        <ButtonClearBlocks objArr={objArr} setValue={setValue} />
-        <ButtonSort objArr={objArr} setValue={setValue} sliceBrackets={sliceBrackets} />
+        <ButtonClearBlocks newArray={newArray} setNewArray={setNewArray} />
+        <ButtonSort newArray={newArray} setNewArray={setNewArray} sliceBrackets={sliceBrackets} />
       </div>
     </>
   )

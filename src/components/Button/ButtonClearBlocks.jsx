@@ -1,9 +1,9 @@
 import style from './Button.module.css';
 
-export const ButtonClearBlocks = ({ objArr, setValue }) => {
+export const ButtonClearBlocks = ({ newArray, setNewArray }) => {
 
-  const handleAction = () => {
-    setValue(objArr.map((el) => {
+  const handleClearBlocks = () => {
+    setNewArray(newArray.map((el) => {
       return {
         ...el,
         value: "_",
@@ -17,6 +17,6 @@ export const ButtonClearBlocks = ({ objArr, setValue }) => {
   }
 
   return (
-    <button style={{width: "140px", marginLeft: "0px"}} className={style.button} onClick={handleAction}>clear table</button>
+    <button style={{width: "140px", marginLeft: "0px"}} className={style.button} onClick={handleClearBlocks}>clear table</button>
   )
 }
