@@ -1,4 +1,4 @@
-// import style from './Button.module.css';
+import style from './Button.module.css';
 
 export const ButtonSort = ({ objArr, setValue, sliceBrackets }) => {
 
@@ -19,6 +19,6 @@ export const ButtonSort = ({ objArr, setValue, sliceBrackets }) => {
   }
 
   return (
-    <button onClick={handleSort}>SORT</button>
+    <button className={style.button } onClick={handleSort}>sort</button>
   )
 }

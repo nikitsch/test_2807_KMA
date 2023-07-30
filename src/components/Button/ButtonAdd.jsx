@@ -1,5 +1,5 @@
 import { v1 } from 'uuid';
-// import style from './Button.module.css';
+import style from './Button.module.css';
 
 export const ButtonAdd = ({ objArr, text, setText, setValue, sliceBrackets }) => {
 
@@ -42,6 +42,6 @@ export const ButtonAdd = ({ objArr, text, setText, setValue, sliceBrackets }) =>
   }
 
   return (
-    <button onClick={handleAction}>ADD</button>
+    <button className={style.button } onClick={handleAction}>add</button>
   )
 }

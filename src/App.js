@@ -1,8 +1,9 @@
 import { useCallback, useState } from 'react';
 import { Element } from './components/Element/Element';
-import style from './App.module.css';
 import { ButtonAdd } from './components/Button/ButtonAdd';
 import { ButtonSort } from './components/Button/ButtonSort';
+import style from './App.module.css';
+import { ButtonClearField } from './components/Button/ButtonClearField';
 
 const arr = new Array(100).fill({ "value": "_", "leftBracket": false, "rightBracket": false, "block": null, "colorBlock": "#D0D0D0", "isClick": false })
 
@@ -21,63 +22,9 @@ function App() {
     }))
   }, []);
 
-  // function addBlock(enter) {
-
-  //   const color = '#F' + (Math.random().toString(16) + '00000').substring(3, 8).toUpperCase()
-  //   const idBlock = v1()
-
-  //   enter.split('').forEach(symbol => {
-  //     let pasted = false;
-
-  //     setValue(arr => arr.map(el => {
-  //       if (el.value === '_' && !pasted) {
-  //         pasted = true;
-  //         return {
-  //           ...el,
-  //           value: symbol,
-  //           leftBracket: true,
-  //           rightBracket: true,
-  //           block: idBlock,
-  //           colorBlock: color,
-  //         }
-  //       }
-  //       return el;
-  //     }))
-  //   })
-  //   sliceBrackets()
-  // }
-
-  // const handleAction = () => {
-  //   const emptyFields = objArr.filter(el => el.value === "_").length
-  //   if (text.trim().length > emptyFields) {
-  //     alert('Нет места. Удалите какой-либо блок')
-  //     return
-  //   }
-  //   if (text.trim().length) {
-  //     addBlock(text.trim())
-  //     setText('');
-  //   }
-  // }
-
   const handleSubmit = (e) => {
     setText(e.target.value)
   }
-
-  // const handleSort = () => {
-
-  //   const arrBlock = objArr.map(id => id.block)
-  //   const sortBlock = arrBlock.filter((item, index) =>
-  //     item !== null && index === arrBlock.indexOf(item)
-  //   )
-  //   sortBlock.push(null)
-  //   console.log(sortBlock);
-  //   setValue(arr => arr.toSorted((prev, next) => {
-  //     if (sortBlock.indexOf(prev.block) < sortBlock.indexOf(next.block)) return -1;
-  //     if (sortBlock.indexOf(prev.block) > sortBlock.indexOf(next.block)) return 1;
-  //     return 0
-  //   }))
-  //   sliceBrackets()
-  // }
 
   const singleClick = (group) => {
     setValue((symbols) => symbols.map(({ isClick, ...props }) => ({
@@ -102,17 +49,19 @@ function App() {
     <>
       <div className={style.manual}>
         <input
+          className={style.input}
           placeholder='Entry field'
           value={text}
+          maxlength="100"
           onChange={handleSubmit}
         />
         <ButtonAdd objArr={objArr} text={text} setText={setText} setValue={setValue} sliceBrackets={sliceBrackets} />
+        <ButtonClearField setText={setText} />
         <ButtonSort objArr={objArr} setValue={setValue} sliceBrackets={sliceBrackets} />
       </div>
       <div className={style.elements}>
         {objArr.map((el) => {
           return <Element
-            key={el.block}
             sign={el.value}
             left={el.leftBracket}
             right={el.rightBracket}

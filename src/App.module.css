@@ -1,14 +1,22 @@
 .manual {
-  
+  width: 95vw;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.input {
+  width: 700px;
+  height: 20px;
+  font-size: large;
+  padding: 0 10px;
+  border-radius: 20px;
 }
 
 .elements {
   display: grid;
   grid-template-columns: repeat(25, 1fr);
-  /* grid-template-rows: repeat(2, 1fr); */
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   width: 95vw;
-  margin: 50px auto;
-  /* background: rgb(255, 211, 115) */
+  margin: 30px auto;
 }
